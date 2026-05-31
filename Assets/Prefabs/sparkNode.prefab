@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1046540686269052095}
   - component: {fileID: 8195067475355992695}
   - component: {fileID: 6592648831783742590}
+  - component: {fileID: 8079693722781065433}
   m_Layer: 0
   m_Name: sparkNode
   m_TagString: Untagged
@@ -82,6 +83,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14, y: 0.08778958, z: 0.14}
   m_Center: {x: 0, y: 0.04389479, z: 0}
+--- !u!114 &8079693722781065433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5355517494936170752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c3a45ad5a2d43f1a5829f5656c08b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &1281046610428520697
 PrefabInstance:
   m_ObjectHideFlags: 0
