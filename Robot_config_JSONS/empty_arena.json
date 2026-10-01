@@ -1,0 +1,13 @@
+{
+  "mqtt": {
+    "enablePublishPoses": false,
+    "enableTrackPoses": true
+  },
+  "robots": [],
+  "arena": {
+    "sizeX": 3.0,
+    "sizeY": 3.0,
+    "originX": 0.0,
+    "originY": 0.0
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "SparkVerse",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b0510fa589edc51b293326a42aaf2c04"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

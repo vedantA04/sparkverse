@@ -1,0 +1,14 @@
+mosq:
+    docker run --rm -d -p 1883:1883 -v "$(realpath $PWD/..)/mosquitto/config:/mosquitto/config" eclipse-mosquitto
+
+sub ID:
+    docker run --rm --net host -it eclipse-mosquitto mosquitto_sub -t "arena/sparknode{{ID}}/cmd" -v
+
+server:
+    uv run src/main.py
+
+check-all:
+    uv run ruff format
+    uv run ruff check --fix
+    uv run ty check
+    uv run pytest

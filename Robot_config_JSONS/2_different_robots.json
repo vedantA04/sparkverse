@@ -1,0 +1,24 @@
+{
+  "robots": [
+    {
+      "id": 1001,
+      "name": "Robot_01",
+      "prefab": "simplediffdrivebot",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": 1002,
+      "name": "Robot_02",
+      "prefab": "digitaltwin",
+      "x": 1,
+      "y": 1
+    }
+  ],
+  "arena": {
+    "sizeX": 3.0,
+    "sizeY": 3.0,
+    "originX": 0.0,
+    "originY": 0.0
+  }
+}

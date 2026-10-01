@@ -1,0 +1,21 @@
+{
+  "mqtt": {
+    "enablePublishPoses": true,
+    "poseUpdateInterval": 1.0
+  },
+  "robots": [
+    {
+      "id": 1001,
+      "name": "Robot_01",
+      "prefab": "simplediffdrivebot",
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "arena": {
+    "sizeX": 3.0,
+    "sizeY": 3.0,
+    "originX": 0.0,
+    "originY": 0.0
+  }
+}

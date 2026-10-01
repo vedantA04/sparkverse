@@ -1,0 +1,81 @@
+{
+  "enableBoidBehaviour": true,
+  "robots": [
+    {
+      "id": 1001,
+      "name": "Robot_01",
+      "prefab": "digitaltwin",
+      "x": -1.0,
+      "y": -1.0
+    },
+    {
+      "id": 1002,
+      "name": "Robot_02",
+      "prefab": "digitaltwin",
+      "x": -0.5,
+      "y": -1.0
+    },
+    {
+      "id": 1003,
+      "name": "Robot_03",
+      "prefab": "digitaltwin",
+      "x": 0.0,
+      "y": -1.0
+    },
+    {
+      "id": 1004,
+      "name": "Robot_04",
+      "prefab": "digitaltwin",
+      "x": 0.5,
+      "y": -1.0
+    },
+    {
+      "id": 1005,
+      "name": "Robot_05",
+      "prefab": "digitaltwin",
+      "x": 1.0,
+      "y": -1.0
+    },
+    {
+      "id": 1006,
+      "name": "Robot_06",
+      "prefab": "digitaltwin",
+      "x": -1.0,
+      "y": 1.0
+    },
+    {
+      "id": 1007,
+      "name": "Robot_07",
+      "prefab": "digitaltwin",
+      "x": -0.5,
+      "y": 1.0
+    },
+    {
+      "id": 1008,
+      "name": "Robot_08",
+      "prefab": "digitaltwin",
+      "x": 0.0,
+      "y": 1.0
+    },
+    {
+      "id": 1009,
+      "name": "Robot_09",
+      "prefab": "digitaltwin",
+      "x": 0.5,
+      "y": 1.0
+    },
+    {
+      "id": 1010,
+      "name": "Robot_10",
+      "prefab": "digitaltwin",
+      "x": 1.0,
+      "y": 1.0
+    }
+  ],
+  "arena": {
+    "sizeX": 3.0,
+    "sizeY": 3.0,
+    "originX": 0.0,
+    "originY": 0.0
+  }
+}
