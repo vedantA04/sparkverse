@@ -169,14 +169,11 @@ MonoBehaviour:
   articulationBodyPrefab: {fileID: 7750998025097530321, guid: 0fa3c739ef2bc45cd93c8b680a4c5fa5, type: 3}
   autoSpawnCount: 100
   arenaSize: {x: 30, y: 30}
-  arenaOrigin: {x: 0, y: 0, z: 0}
+  arenaOrigin: {x: 0, y: 0}
   minSpawnDistance: 0.5
   robotMassGrams: 470
   maxSpeed: 0.1
   maxForce: 10
-  unityRobotsServerURL: http://localhost:8001
-  unityRobotsUpdateInterval: 0.2
-  enableUnityRobotsTracking: 1
   enableBoidBehavior: 0
   cohesionRadius: 5
   cohesionWeight: 1
@@ -184,11 +181,8 @@ MonoBehaviour:
   separationWeight: 2
   alignmentRadius: 3
   alignmentWeight: 1
-  pythonServerURL: http://localhost:8001
-  serverUpdateInterval: 0.5
   drawBoidDebug: 1
   debugCollisions: 1
-  enableServerTracking: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +577,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25c4e8015ac4b474c81d169886ace1f9, type: 2}
+  - {fileID: 2100000, guid: c66685cc9eacf4fa793a9004e1131369, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -625,7 +619,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.15, z: 0}
-  m_LocalScale: {x: 3, y: 0.3, z: 3}
+  m_LocalScale: {x: 10, y: 0.3, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -696,6 +690,7 @@ MonoBehaviour:
   mqttUserName: 
   mqttPassword: 
   mqttTopicPattern: arena/+/cmd
+  mqttRealPoseTopic: arena/poses/real
   simulationManager: {fileID: 310902846}
 --- !u!4 &1428370482
 Transform:
