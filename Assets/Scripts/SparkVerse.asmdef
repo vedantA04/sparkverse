@@ -2,7 +2,8 @@
     "name": "SparkVerse",
     "rootNamespace": "",
     "references": [
-        "GUID:b0510fa589edc51b293326a42aaf2c04"
+        "Unity.InputSystem",
+        "M2Mqtt"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

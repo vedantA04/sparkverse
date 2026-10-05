@@ -1,7 +1,4 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// WASD-driven differential drive using ArticulationBody revolute joints.
