@@ -39,3 +39,14 @@ Optional behaviours can be turned on/off via the Unity UI. Open the
 `SimulationScene`, select `SimulationManager`, then check the checkboxes in the
 object inspector.
 
+
+# Recording the simulation to video
+
+1. Open the project in Unity
+2. Go to Window -> General -> Recorder -> Recording Window
+3. In the left-hand panel, add a recorder. Adjust the settings if you like, or
+   leave them at their defaults
+4. Click "START RECORDING". The simulation will also start
+5. Use the simulation as per usual, and stop it when you are done. The video
+   recording of the simulation will be saved under `Recordings/`, which is
+   ignored by git
