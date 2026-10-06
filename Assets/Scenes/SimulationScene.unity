@@ -333,8 +333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941e9a27619b8b3d6ac511e5d376a8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SparkVerse::FlyCamera
-  moveSpeed: 5
-  mouseSensitivity: 0.1
+  moveSpeed: 1.5
+  mouseSensitivity: 0.05
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c66685cc9eacf4fa793a9004e1131369, type: 2}
+  - {fileID: 2100000, guid: 25c4e8015ac4b474c81d169886ace1f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
