@@ -49,7 +49,7 @@ Note: After changing the broker configuration, restart the broker. You can use t
    Leave the MQTT broker address unchanged.
 5. Click `Start simulation`.
    - Ignore the "Server error: Cannot connect to destination host" messages.
-   - You can move around the simulation using WASD keys + mouse
+   - You can move around the simulation using WASD keys + mouse, Q/E to move up/down. Alt+tab or move focus to another window to stop the mouse from moving the camera.
 6. Send an MQTT command to a SparkNode (ID 1001) using `mosquitto`:
 
    ```bash

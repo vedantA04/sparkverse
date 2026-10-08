@@ -21,8 +21,10 @@ selects a config file and then starts the simulation
 
 Some extra non-unity stuff:
 
-./Robot_config_JSONS: example configurations that specify robot types and initial positions
-./test_server: A simplified path planning and control server intended for testing
+- ./Robot_config_JSONS: example configurations that specify robot types and
+  initial positions
+- ./test_server: A simplified path planning and control server intended for
+  testing
 
 
 # Conventions

@@ -4,13 +4,25 @@
 ```sh
 # build the simulation (do this whenever you change any code)
 ./build.sh
-# run unit tests
-./run-tests.sh
-# run the simulation (example config file shown)
-./run-sim.sh Robot_config_JSONS/1_middle_robot.json
+
+# Run the sim.
+# Control the camera with the mouse, WASD keys, Q/E  for up/down.
+# Alt-tab to lock the camera and access other windows.
+./run-sim.sh Robot_config_JSONS/4_square.json
+
+# send random drive and turn commands
+./random_moves.sh
+
+# same as above, but avoid other robots & arena limits
+./random_moves_avoid.py
+
+# other things you can do:
 # run the simulation in headless mode, ie. no graphics
 ./run-sim.sh --headless Robot_config_JSONS/1_middle_robot.json
+# run unit tests
+./run-tests.sh
 ```
+
 
 
 # Using the test server

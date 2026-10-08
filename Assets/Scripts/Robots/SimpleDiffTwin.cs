@@ -12,6 +12,7 @@ namespace Robots
 
         private ICommand LastCommand { get; set; }
         private double LastCommandEnd { get; set; }
+        private double _lastUnhandledCommandLog;
 
         public SimpleDiffTwin(int id, GameObject go)
         {
@@ -34,7 +35,7 @@ namespace Robots
             };
             twin.Transform = twin.SimpleController.poseObject.transform;
 
-            Debug.Log($"[SimulationManager] Spawned Digital Twin {id}");
+            Debug.Log($"Spawned Digital Twin {id}");
             return twin;
         }
 
@@ -45,6 +46,7 @@ namespace Robots
             {
                 DriveCommand d => Time.timeAsDouble + d.DurationMs / 1000.0,
                 TurnCommand t => Time.timeAsDouble + t.DurationMs / 1000.0,
+                StopCommand =>  Time.timeAsDouble + 100,
                 _ => LastCommandEnd
             };
 
@@ -73,6 +75,16 @@ namespace Robots
                 case TurnCommand t:
                     Turn(t);
                     break;
+                case StopCommand:
+                    Stop();
+                    break;
+                default:
+                    if (Time.timeAsDouble - _lastUnhandledCommandLog > 1.0)
+                    {
+                        Debug.LogError($"Unhandled command: {LastCommand}");
+                        _lastUnhandledCommandLog =  Time.timeAsDouble;
+                    }
+                    break;
             }
         }
 
@@ -86,6 +98,12 @@ namespace Robots
         {
             SimpleController.LeftDriveInput = cmd.Speed / 63.0f;
             SimpleController.RightDriveInput = -cmd.Speed / 63.0f;
+        }
+
+        private void Stop()
+        {
+            SimpleController.LeftDriveInput = 0f;
+            SimpleController.RightDriveInput = 0f;
         }
     }
 }

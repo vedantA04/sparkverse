@@ -6,6 +6,18 @@ namespace Tests
     public class MqttCommandParserTests
     {
         [Test]
+        public void Parses_stop_command()
+        {
+            const string message = "stop";
+            var expected = new StopCommand();
+
+            var result = MqttCommandParser.ParseMessage(message);
+
+            Assert.IsFalse(result.IsFailed);
+            Assert.AreEqual(expected, result.Value);
+        }
+
+        [Test]
         public void Parses_drive_command()
         {
             const string message = "drive forward 12 100";

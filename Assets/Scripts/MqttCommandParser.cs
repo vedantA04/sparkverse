@@ -36,6 +36,7 @@ public static class MqttCommandParser
             "drive" => ParseDrive(parts),
             "turn" => ParseTurn(parts),
             "rotate" => ParseRotate(parts),
+            "stop" => Result.Success<ICommand>(new StopCommand()),
             "config" => ParseConfig(parts),
             _ => Result.Fail<ICommand>($"Unknown action {action}")
         };
