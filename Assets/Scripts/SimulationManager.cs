@@ -182,6 +182,10 @@ public class SimulationManager : MonoBehaviour
 
     void Start()
     {
+        // Ensures background processing such as MQTT queue processing
+        // keeps running while the simulation is not in the foreground
+        Application.runInBackground = true;
+
         Debug.Log("[SimulationManager] Started");
 
         if (StartScreenManager.LastLoadedConfig == null)
