@@ -4,7 +4,10 @@
 # requires-python = ">=3.14"
 # dependencies = ["paho-mqtt"]
 #
-# The easiest way to run this script is with uv: https://docs.astral.sh/uv/
+# The easiest way to run this script is to install uv:
+# https://docs.astral.sh/uv/, then you can run it like
+# any other script: ./random_moves_avoid.py
+#
 # Otherwise, you need to install python & the above dependencies,
 # and run this file with python.
 # ///

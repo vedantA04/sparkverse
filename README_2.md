@@ -13,7 +13,8 @@
 # send random drive and turn commands
 ./random_moves.sh
 
-# same as above, but avoid other robots & arena limits
+# Same as above, but avoid other robots & arena limits.
+# Check the documentation at the top of this file for how to run it.
 ./random_moves_avoid.py
 
 # other things you can do:

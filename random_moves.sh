@@ -1,7 +1,7 @@
 #!/bin/bash
 HOST=localhost
-# MOSQ_PUB="mosquitto_pub"
-MOSQ_PUB="docker run --rm --net host eclipse-mosquitto mosquitto_pub"
+MOSQ_PUB="mosquitto_pub"
+# MOSQ_PUB="docker run --rm --net host eclipse-mosquitto mosquitto_pub"
 
 function cmd {
     id="$1"
