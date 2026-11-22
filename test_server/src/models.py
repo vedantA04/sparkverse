@@ -33,6 +33,16 @@ class TurnCommand(Command):
 
 
 @dataclass(frozen=True)
+class WheelSpeedsCommand(Command):
+    action: str = "wheels"
+    duration_ms: int = 0
+
+    # each in [-1.0, 1.0]: 1.0 = full speed forward, -1.0 = full speed reverse
+    left: float = 0.0
+    right: float = 0.0
+
+
+@dataclass(frozen=True)
 class ControlConfig:
     loop_hz: float = 5.0
     broker_host: str = "localhost"

@@ -1,4 +1,4 @@
-from models import DriveCommand, Pose, TurnCommand
+from models import DriveCommand, Pose, TurnCommand, WheelSpeedsCommand
 from mqtt.commands import to_mqtt_message
 from mqtt.poses import parse_poses, serialize_poses
 
@@ -45,6 +45,20 @@ class TestTurnCommandToMqttString:
     def test_turn_left(self):
         cmd = TurnCommand(speed=-1.0, duration_ms=100)
         assert to_mqtt_message(cmd) == "turn left 63 100"
+
+
+class TestWheelSpeedsCommandToMqttString:
+    def test_wheels_stopped(self):
+        cmd = WheelSpeedsCommand(left=0.0, right=0.0, duration_ms=200)
+        assert to_mqtt_message(cmd) == "wheels 0 0 200"
+
+    def test_wheels_full_speed(self):
+        cmd = WheelSpeedsCommand(left=1.0, right=1.0, duration_ms=200)
+        assert to_mqtt_message(cmd) == "wheels 63 63 200"
+
+    def test_wheels_signed_speeds(self):
+        cmd = WheelSpeedsCommand(left=0.5, right=-1.0, duration_ms=100)
+        assert to_mqtt_message(cmd) == "wheels 32 -63 100"
 
 
 class TestParsePoses:

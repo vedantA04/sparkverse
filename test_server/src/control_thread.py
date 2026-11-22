@@ -44,6 +44,6 @@ class ControlThread:
                 for robot_id, command in commands:
                     self._mqtt.publish_command(robot_id, command)
                 for c in commands:
-                    logger.info(c)
+                    logger.debug(c)
 
             self._shutdown_event.wait(timeout=period)

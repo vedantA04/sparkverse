@@ -4,8 +4,9 @@ mosq:
 sub ID:
     docker run --rm --net host -it eclipse-mosquitto mosquitto_sub -t "arena/sparknode{{ID}}/cmd" -v
 
-server:
-    uv run src/main.py
+# eg. just server ../Robot_config_JSONS/4_square.json
+server *SIM_CONFIG:
+    uv run src/main.py {{SIM_CONFIG}}
 
 check-all:
     uv run ruff format

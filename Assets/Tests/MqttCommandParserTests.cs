@@ -42,6 +42,28 @@ namespace Tests
             Assert.AreEqual(expected, result.Value);
         }
 
+        [TestCase("wheels 20 -10 200", 20, -10, 200)]
+        [TestCase("wheels -63 63 0", -63, 63, 0)]
+        public void Parses_wheels_command(string message, int left, int right, int durationMs)
+        {
+            var expected = new WheelSpeedsCommand(left, right, durationMs);
+
+            var result = MqttCommandParser.ParseMessage(message);
+
+            Assert.IsTrue(result.IsSuccess, result.Error);
+            Assert.AreEqual(expected, result.Value);
+        }
+
+        [TestCase("wheels 20 -10")]
+        [TestCase("wheels 64 0 100")]
+        [TestCase("wheels a b 100")]
+        public void Invalid_wheels_command_is_error(string message)
+        {
+            var result = MqttCommandParser.ParseMessage(message);
+
+            Assert.IsTrue(result.IsFailed);
+        }
+
         [TestCase("rotate to 123", 123, 15, 10, 300, 5)]
         [TestCase("rotate to 123 11 12 100 10", 123, 11, 12, 100, 10)]
         public void Parses_rotate_command(

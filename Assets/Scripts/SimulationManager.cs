@@ -43,7 +43,6 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] private float alignmentWeight = 1f;
 
     [Header("Debug")]
-    [SerializeField] private bool drawBoidDebug = true;
     [SerializeField] private bool debugCollisions = true;
 
     private SimulationConfig Config { get; set; }
@@ -85,6 +84,20 @@ public class SimulationManager : MonoBehaviour
             arenaSize = new Vector2(config.arena.sizeX, config.arena.sizeY);
             arenaOrigin = new Vector2(config.arena.originX, config.arena.originY);
             Debug.Log($"[SimulationManager] Arena updated: {arenaSize.x}m x {arenaSize.y}m, origin: {arenaOrigin}");
+
+            var ground = GameObject.Find("real ground");
+            if (ground == null)
+            {
+                Debug.LogWarning("[SimulationManager] 'real ground' not found in scene - ground size not updated");
+            }
+            else
+            {
+                var scale = ground.transform.localScale;
+                scale.x = arenaSize.x;
+                scale.z = arenaSize.y;
+                ground.transform.localScale = scale;
+                Debug.Log($"[SimulationManager] Resized 'real ground' to {scale.x}m x {scale.z}m (Unity x, z)");
+            }
         }
 
         if (digitalTwinPrefab == null)
@@ -112,35 +125,9 @@ public class SimulationManager : MonoBehaviour
 
             if (IsValidSpawnPosition(spawnPos))
             {
-                var twin = robotData.prefab.ToLowerInvariant() switch
-                {
-                    "digitaltwin" => OriginalTwin.Spawn(
-                        digitalTwinPrefab,
-                        spawnPos,
-                        transform,
-                        nextTwinId,
-                        robotMassGrams,
-                        arenaSize,
-                        arenaOrigin,
-                        this
-                    ),
-                    "simplediffdrivebot" => SimpleDiffTwin.Spawn(
-                        simpleDiffDriveRobotPrefab,
-                        spawnPos,
-                        transform,
-                        nextTwinId
-                    ),
-                    "articulationbody" => ArticulationBodyTwin.Spawn(
-                        articulationBodyPrefab,
-                        spawnPos,
-                        transform,
-                        nextTwinId),
-                    _ => throw new ArgumentException($"Unsupported prefab for robot: {robotData.prefab}")
-                };
-                digitalTwins[nextTwinId] = twin;
-                CommandRouter.RegisterReceiver(nextTwinId, twin);
+                var twin = SpawnTwin(robotData.prefab, spawnPos);
+                RegisterTwin(twin);
                 spawnedCount++;
-                nextTwinId++;
                 Debug.Log($"[SimulationManager] Spawned {robotData.name} (ID: {robotData.id}) at ({robotData.x}, {robotData.y})");
             }
             else
@@ -150,6 +137,75 @@ public class SimulationManager : MonoBehaviour
         }
 
         Debug.Log($"[SimulationManager] Successfully spawned {spawnedCount}/{config.robots.Count} robots from config");
+
+        SpawnRandomRobotsFromConfig(config);
+    }
+
+    private void SpawnRandomRobotsFromConfig(SimulationConfig config)
+    {
+        var randomSpawn = config.randomSpawn;
+        if (randomSpawn == null || randomSpawn.count <= 0) return;
+
+        minSpawnDistance = randomSpawn.minDistance;
+
+        var spawnedCount = 0;
+        for (var i = 0; i < randomSpawn.count; i++)
+        {
+            var externalPos = GetRandomSpawnPosition();
+            var spawnPos = UnityCoordMapper.ToUnity3D(externalPos.x, externalPos.y);
+
+            if (!IsValidSpawnPosition(spawnPos))
+            {
+                Debug.LogWarning(
+                    $"[SimulationManager] Random spawn: no free position found after {spawnedCount}/{randomSpawn.count} robots - " +
+                    "arena may be too crowded or randomSpawn.minDistance too large");
+                break;
+            }
+
+            var robotName = $"{randomSpawn.namePrefix}_{randomSpawn.startId + i:D2}";
+            var twin = SpawnTwin(randomSpawn.prefab, spawnPos);
+            RegisterTwin(twin);
+            spawnedCount++;
+            Debug.Log($"[SimulationManager] Spawned {robotName} (ID: {twin.Id}) at ({externalPos.x:F2}, {externalPos.y:F2}) [random]");
+        }
+
+        Debug.Log($"[SimulationManager] Random spawn: placed {spawnedCount}/{randomSpawn.count} '{randomSpawn.prefab}' robots");
+    }
+
+    private ICommandableTwin SpawnTwin(string prefabType, Vector3 spawnPos)
+    {
+        return prefabType.ToLowerInvariant() switch
+        {
+            "digitaltwin" => OriginalTwin.Spawn(
+                digitalTwinPrefab,
+                spawnPos,
+                transform,
+                nextTwinId,
+                robotMassGrams,
+                arenaSize,
+                arenaOrigin,
+                this
+            ),
+            "simplediffdrivebot" => SimpleDiffTwin.Spawn(
+                simpleDiffDriveRobotPrefab,
+                spawnPos,
+                transform,
+                nextTwinId
+            ),
+            "articulationbody" => ArticulationBodyTwin.Spawn(
+                articulationBodyPrefab,
+                spawnPos,
+                transform,
+                nextTwinId),
+            _ => throw new ArgumentException($"Unsupported prefab for robot: {prefabType}")
+        };
+    }
+
+    private void RegisterTwin(ICommandableTwin twin)
+    {
+        digitalTwins[nextTwinId] = twin;
+        CommandRouter.RegisterReceiver(nextTwinId, twin);
+        nextTwinId++;
     }
 
     public bool ValidateConfig(SimulationConfig config, out string errorMessage)
