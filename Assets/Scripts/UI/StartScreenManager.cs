@@ -69,11 +69,7 @@ public class StartScreenManager : MonoBehaviour
 
         #if UNITY_EDITOR
             // EDITOR: use OS file picker
-            var lastUsedConfig = UserPreferences.Load().lastUsedConfigPath;
-            var startDir = lastUsedConfig == null
-                ? System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
-                : Path.GetDirectoryName(lastUsedConfig);
-
+            var startDir = GetSafeStartDirectory();
             var path = EditorUtility.OpenFilePanel("Select Robot Config JSON", startDir, "json");
 
             if (!string.IsNullOrEmpty(path))
@@ -93,9 +89,9 @@ public class StartScreenManager : MonoBehaviour
         // Debug.Log($"[START SCREEN] Using fixed config path in build: {path}");
         // LoadConfigFromPath(path);
         // BUILD: use path typed by the user
-            string path = configPathInputField != null
-                ? configPathInputField.text.Trim()
-                : string.Empty;
+            string path = UserPreferences.CleanPath(configPathInputField != null
+                ? configPathInputField.text
+                : string.Empty);
 
                 if (string.IsNullOrEmpty(path))
                 {
@@ -227,6 +223,18 @@ public class StartScreenManager : MonoBehaviour
         return brokerInputField != null ? brokerInputField.text : "";
     }
 
+    private static string GetSafeStartDirectory()
+    {
+        var lastUsedConfig = UserPreferences.Load().lastUsedConfigPath;
+        var documents = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+
+        if (string.IsNullOrWhiteSpace(lastUsedConfig))
+            return documents;
+
+        var dir = Path.GetDirectoryName(lastUsedConfig);
+        return string.IsNullOrEmpty(dir) || !Directory.Exists(dir) ? documents : dir;
+    }
+
     /// <summary>
     /// Checks for CLI arguments and auto-launches if present, bypassing UI.
     /// </summary>
@@ -288,6 +296,7 @@ public class StartScreenManager : MonoBehaviour
     private void RestoreLastConfig()
     {
         var saved = UserPreferences.Load().lastUsedConfigPath;
+
         Debug.Log($"[START SCREEN] saved prefs: {saved}");
         if (string.IsNullOrEmpty(saved))
             return;
