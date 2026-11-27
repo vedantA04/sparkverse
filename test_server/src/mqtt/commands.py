@@ -1,4 +1,4 @@
-from models import Command, DriveCommand, TurnCommand
+from models import Command, DriveCommand, TurnCommand, WheelSpeedsCommand
 
 
 def to_mqtt_message(cmd: Command) -> str:
@@ -10,4 +10,8 @@ def to_mqtt_message(cmd: Command) -> str:
         direction = "right" if cmd.speed >= 0 else "left"
         speed_int = round(abs(cmd.speed) * 63)
         return f"turn {direction} {speed_int} {cmd.duration_ms}"
+    if isinstance(cmd, WheelSpeedsCommand):
+        left_int = round(cmd.left * 63)
+        right_int = round(cmd.right * 63)
+        return f"wheels {left_int} {right_int} {cmd.duration_ms}"
     raise TypeError(f"Unknown command type: {type(cmd)}")

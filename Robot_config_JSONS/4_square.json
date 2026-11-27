@@ -1,7 +1,7 @@
 {
   "mqtt": {
     "enablePublishPoses": true,
-    "poseUpdateInterval": 0.2
+    "posePublishInterval": 0.2
   },
   "arena": {
     "sizeX": 3.0,

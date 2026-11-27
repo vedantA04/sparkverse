@@ -1,0 +1,16 @@
+{
+  "randomSpawn": {
+    "count": 15,
+    "prefab": "simplediffdrivebot"
+  },
+  "arena": {
+    "sizeX": 7.0,
+    "sizeY": 7.0,
+    "originX": 0.0,
+    "originY": 0.0
+  },
+  "mqtt": {
+    "enablePublishPoses": true,
+    "posePublishInterval": 0.1
+  }
+}

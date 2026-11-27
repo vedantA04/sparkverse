@@ -10,10 +10,8 @@ A 'server' for testing a robot simulation that runs in Unity. Not a HTTP server
 ```sh
 just check-all  # format, lint, run tests
 just mosq       # run the mosquitto broker (if not already running)
-just server     # run the server
+just server ../Robot_config_JSONS/<config>.json  # run the server
 ```
 
 Now run the simulation. You should see messages in the Unity console, and on
 the server console. Hopefully the robots are also moving!
-
-The test server is configured via hard-coded settings at the top of main.py

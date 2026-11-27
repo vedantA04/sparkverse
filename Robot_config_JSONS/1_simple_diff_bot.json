@@ -1,7 +1,7 @@
 {
   "mqtt": {
     "enablePublishPoses": true,
-    "poseUpdateInterval": 1.0
+    "posePublishInterval": 1.0
   },
   "robots": [
     {

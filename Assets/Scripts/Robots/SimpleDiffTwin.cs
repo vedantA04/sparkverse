@@ -47,6 +47,7 @@ namespace Robots
                 DriveCommand d => Time.timeAsDouble + d.DurationMs / 1000.0,
                 TurnCommand t => Time.timeAsDouble + t.DurationMs / 1000.0,
                 StopCommand =>  Time.timeAsDouble + 100,
+                WheelSpeedsCommand w => Time.timeAsDouble + w.DurationMs / 1000.0,
                 _ => LastCommandEnd
             };
 
@@ -78,6 +79,9 @@ namespace Robots
                 case StopCommand:
                     Stop();
                     break;
+                case WheelSpeedsCommand w:
+                    SetWheelSpeeds(w);
+                    break;
                 default:
                     if (Time.timeAsDouble - _lastUnhandledCommandLog > 1.0)
                     {
@@ -104,6 +108,12 @@ namespace Robots
         {
             SimpleController.LeftDriveInput = 0f;
             SimpleController.RightDriveInput = 0f;
+        }
+
+        private void SetWheelSpeeds(WheelSpeedsCommand cmd)
+        {
+            SimpleController.LeftDriveInput = cmd.LeftSpeed / 63.0f;
+            SimpleController.RightDriveInput = cmd.RightSpeed / 63.0f;
         }
     }
 }

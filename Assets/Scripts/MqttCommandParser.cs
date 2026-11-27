@@ -35,6 +35,7 @@ public static class MqttCommandParser
         {
             "drive" => ParseDrive(parts),
             "turn" => ParseTurn(parts),
+            "wheels" => ParseWheels(parts),
             "rotate" => ParseRotate(parts),
             "stop" => Result.Success<ICommand>(new StopCommand()),
             "config" => ParseConfig(parts),
@@ -77,6 +78,26 @@ public static class MqttCommandParser
         }
 
         return Result.Fail<ICommand>($"[MQTT] Invalid turn command format: {string.Join(" ", parts)}");
+    }
+
+    private static Result<ICommand> ParseWheels(string[] parts)
+    {
+        if (parts.Length < 4
+            || !int.TryParse(parts[1], out var left)
+            || !int.TryParse(parts[2], out var right)
+            || !int.TryParse(parts[3], out var durationMs))
+        {
+            return Result.Fail<ICommand>($"[MqttCommandParser] Invalid wheels command format: {string.Join(" ", parts)}");
+        }
+
+        try
+        {
+            return Result.Success<ICommand>(new WheelSpeedsCommand(left, right, durationMs));
+        }
+        catch (ArgumentException ex)
+        {
+            return Result.Fail<ICommand>($"[MqttCommandParser] {ex.Message}");
+        }
     }
 
     private static Result<ICommand> ParseRotate(string[] parts)

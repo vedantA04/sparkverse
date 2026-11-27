@@ -20,8 +20,6 @@
 # other things you can do:
 # run the simulation in headless mode, ie. no graphics
 ./run-sim.sh --headless Robot_config_JSONS/1_middle_robot.json
-# run unit tests
-./run-tests.sh
 ```
 
 

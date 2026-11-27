@@ -17,6 +17,16 @@ public class RobotConfigData
 }
 
 [System.Serializable]
+public class RandomSpawnConfigData
+{
+    public int count;
+    public string prefab = "simplediffdrivebot";
+    public string namePrefix = "Robot";
+    public int startId = 1;
+    public float minDistance = 0.5f;
+}
+
+[System.Serializable]
 public class ArenaConfigData
 {
     public float sizeX = 3.0f;
@@ -28,8 +38,20 @@ public class ArenaConfigData
 [System.Serializable]
 public class MqttConfigData
 {
+    /// <summary>
+    /// Publish robot poses to MQTT
+    /// </summary>
     public bool enablePublishPoses = true;
+
+    /// <summary>
+    /// Sets rate at which poses are published
+    /// </summary>
     public float posePublishInterval = 0.5f;
+
+    /// <summary>
+    /// If true, process real pose messages from the sparkcam
+    /// and display the tracked robots in the simulation
+    /// </summary>
     public bool enableTrackPoses = false;
 }
 
@@ -37,6 +59,7 @@ public class MqttConfigData
 public class SimulationConfig
 {
     public List<RobotConfigData> robots = new List<RobotConfigData>();
+    public RandomSpawnConfigData randomSpawn = new RandomSpawnConfigData();
     public ArenaConfigData arena = new ArenaConfigData();
     public MqttConfigData mqtt = new MqttConfigData();
     public bool enableBoidBehaviour;
@@ -108,6 +131,32 @@ public class SimulationConfig
             }
         }
 
+        if (randomSpawn != null)
+        {
+            if (randomSpawn.count < 0)
+            {
+                errorMessage = $"Random spawn: count must be non-negative, got: {randomSpawn.count}";
+                return false;
+            }
+
+            if (randomSpawn.count > 0)
+            {
+                var prefab = randomSpawn.prefab?.ToLowerInvariant();
+                if (prefab != "digitaltwin" && prefab != "simplediffdrivebot" && prefab != "articulationbody")
+                {
+                    errorMessage = $"Random spawn: unsupported prefab '{randomSpawn.prefab}' " +
+                                   "(supported: digitaltwin, simplediffdrivebot, articulationbody)";
+                    return false;
+                }
+
+                if (randomSpawn.minDistance < 0f)
+                {
+                    errorMessage = $"Random spawn: minDistance must be non-negative, got: {randomSpawn.minDistance}";
+                    return false;
+                }
+            }
+        }
+
         if (arena == null)
         {
             errorMessage = "Arena configuration missing";
@@ -136,6 +185,11 @@ public class SimulationConfig
         foreach (var robot in robots)
         {
             output += $"    - {robot.name} (ID: {robot.id}) at ({robot.x}, {robot.y})\n";
+        }
+
+        if (randomSpawn != null && randomSpawn.count > 0)
+        {
+            output += $"  Random spawn: {randomSpawn.count} x {randomSpawn.prefab} (min distance: {randomSpawn.minDistance}m)\n";
         }
 
         return output;
